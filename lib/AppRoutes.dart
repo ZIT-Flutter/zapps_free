@@ -8,22 +8,19 @@ import 'package:zapps/views/setting_screen.dart';
 import 'package:zapps/views/splash_screen.dart';
 
 class AppRoutes {
-  static const String homeSceen= "/homescreen";
+  static const String homeSceen = "/homescreen";
   static const String moreScreen = "/morescreen";
-  static const String gameScreen = "/gamescreen";
   static const String settingsScreen = "/settingscreen";
   static const String scoreScreen = "/scoresscreen";
   static const String splashScreen = "/splashscreen";
-
+  static const String gameScreen = "/gameScreen";
 
   static List<GetPage> routes = [
-
-        GetPage(
+    GetPage(
         name: splashScreen,
         page: () => SplashScreen(),
         transitionDuration: const Duration(milliseconds: 1000),
         transition: Transition.fade),
-
     GetPage(
         name: homeSceen,
         page: () => HomeScreen(),
@@ -48,8 +45,7 @@ class AppRoutes {
       name: gameScreen,
       page: () => const GameScreen(),
       transitionDuration: const Duration(milliseconds: 1000),
-      transition: Transition.circularReveal,
-
+      transition: Transition.native,
     ),
   ];
 }

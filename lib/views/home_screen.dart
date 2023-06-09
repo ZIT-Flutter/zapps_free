@@ -114,7 +114,7 @@ class HomeScreenGameIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    final screenHeight = MediaQuery.of(context).size.height;
+    // final screenHeight = MediaQuery.of(context).size.height;
 
     // Calculate the desired icon size based on screen dimensions
     final iconSize = screenWidth * 0.1; // Adjust the multiplier as needed

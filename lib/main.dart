@@ -1,5 +1,7 @@
 // @dart=2.12.0
 
+// ignore_for_file: invalid_language_version_override, depend_on_referenced_packages
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';

@@ -1,10 +1,9 @@
-// ignore_for_file: depend_on_referenced_packages
-
+// ignore_for_file: depend_on_referenced_packages, prefer_const_constructors, prefer_const_literals_to_create_immutables
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:zapps/components/screen_utils.dart';
 import '../data/frog.dart';
 
 class GameScreen extends StatefulWidget {
@@ -144,23 +143,24 @@ class _GameScreenState extends State<GameScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    // final screenHeight = MediaQuery.of(context).size.height;
+    final cardGap = screenWidth * 0.015;
+
     return Scaffold(
-      body: Stack(
-        children: [
-          RotatedBox(
-            quarterTurns: 1,
-            child: Image.asset(
-              "assets/images/main.png",
-              fit: BoxFit.cover,
-              height: double.infinity,
-              width: double.infinity,
-              alignment: Alignment.center,
-            ),
-          ),
-          Positioned(
-            top: 15,
-            left: 15,
-            child: IconButton(
+      body: Container(
+        padding: const EdgeInsets.symmetric(vertical: 20),
+        decoration: const BoxDecoration(
+            image: DecorationImage(
+          image: AssetImage('assets/images/main.png'),
+          fit: BoxFit.cover,
+        )),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            //Back button
+            IconButton(
               icon: const Icon(
                 Icons.arrow_back,
                 color: Colors.black54,
@@ -170,70 +170,36 @@ class _GameScreenState extends State<GameScreen> {
                 Navigator.pop(context);
               },
             ),
-          ),
-          Positioned(
-            top: 40,
-            right: 10,
-            child: Text(
-              "Score: $score",
-              style: const TextStyle(
-                fontSize: 25,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-              ),
-            ),
-          ),
-          Positioned(
-            top: 70,
-            left: 62,
-            child: Container(
-              color: Colors.blue,
-              alignment: Alignment.center,
-              padding: EdgeInsets.zero,
-              // color: Colors.amber,
-              height: 150,
-              width: 475,
 
-              child: Center(
-                child: GridView.builder(
-                  padding: EdgeInsets.zero,
-                  itemCount: all.length,
-                  gridDelegate:
-                      const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 4,
-                  ),
-                  itemBuilder: (context, index) {
-                    var data = [all[index]];
-
-                    return Container(
-                      alignment: Alignment.center,
-                      // color: Colors.blue,
-                      margin: const EdgeInsets.symmetric(
-                          horizontal: 12, vertical: 0),
-                      child: buildTarget(
-                        context,
-                        text: '',
-                        animals: data,
-                        acceptTypes: AnimalType.values,
-                        onAccept: (data) => setState(() {
-                          removeAll(data);
-                          all.add(data);
-                        }),
-                      ),
-                    );
-                  },
-                ),
-              ),
-            ),
-          ),
-          Positioned(
-            left: 70,
-            top: 215,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //Sequence Grid -----------------------------------------------------
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    for (int index = 0; index < all.length; index++)
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          buildTarget(
+                            context,
+                            text: '',
+                            animals: [all[index]],
+                            acceptTypes: AnimalType.values,
+                            onAccept: (data) => setState(() {
+                              removeAll(data);
+                              all.add(data);
+                            }),
+                          ),
+                          SizedBox(width: cardGap),
+                        ],
+                      ),
+                  ],
+                ),
+                SizedBox(height: cardGap),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
                     buildTarget(
                       context,
@@ -248,7 +214,7 @@ class _GameScreenState extends State<GameScreen> {
                         first.play();
                       },
                     ),
-                    const SizedBox(width: 20),
+                    SizedBox(width: cardGap),
                     buildTarget(
                       context,
                       text: '2',
@@ -262,7 +228,7 @@ class _GameScreenState extends State<GameScreen> {
                         second.play();
                       },
                     ),
-                    const SizedBox(width: 20),
+                    SizedBox(width: cardGap),
                     buildTarget(
                       context,
                       text: '3',
@@ -276,7 +242,7 @@ class _GameScreenState extends State<GameScreen> {
                         third.play();
                       },
                     ),
-                    const SizedBox(width: 20),
+                    SizedBox(width: cardGap),
                     buildTarget(
                       context,
                       text: '4',
@@ -290,45 +256,26 @@ class _GameScreenState extends State<GameScreen> {
                         fourth.play();
                       },
                     ),
+                    SizedBox(width: cardGap),
                   ],
-                ),
+                )
               ],
             ),
-          ),
-          Positioned(
-            right: 10,
-            bottom: 270,
-            child: Container(
-              alignment: Alignment.center,
-              width: 110,
-              height: 45,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10),
-                boxShadow: const [
-                  BoxShadow(
-                    color: Colors.black12,
-                    blurRadius: 10,
-                    offset: Offset(0, 10),
-                  ),
-                ],
-              ),
-              child: Text('Time: $time',
+            //Score and info
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text(
+                  "Score: $score",
                   style: const TextStyle(
-                    fontSize: 20,
+                    fontSize: 25,
                     fontWeight: FontWeight.bold,
                     color: Colors.black,
-                  )),
-            ),
-          ),
-          Positioned(
-              right: 10,
-              bottom: 200,
-              child: GestureDetector(
-                onTap: () {
-                  resetTimer();
-                },
-                child: Container(
+                  ),
+                ),
+                SizedBox(height: cardGap),
+                Container(
+                  alignment: Alignment.center,
                   width: 110,
                   height: 45,
                   decoration: BoxDecoration(
@@ -342,27 +289,58 @@ class _GameScreenState extends State<GameScreen> {
                       ),
                     ],
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      Icon(
-                        Icons.restore,
-                        size: 20,
-                      ),
-                      SizedBox(width: 10),
-                      Text(
-                        'Reset',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ],
+                  child: Text(
+                    'Time: $time',
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
                   ),
                 ),
-              )),
-        ],
+                SizedBox(height: cardGap),
+                GestureDetector(
+                  onTap: () {
+                    resetTimer();
+                  },
+                  child: Container(
+                    width: 110,
+                    height: 45,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10),
+                      boxShadow: const [
+                        BoxShadow(
+                          color: Colors.black12,
+                          blurRadius: 10,
+                          offset: Offset(0, 10),
+                        ),
+                      ],
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Icon(
+                          Icons.restore,
+                          size: 20,
+                        ),
+                        const Text(
+                          'Reset',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(width: cardGap * 0.2)
+          ],
+        ),
       ),
     );
   }
@@ -417,8 +395,8 @@ class _GameScreenState extends State<GameScreen> {
     required DragTargetAccept<Animal> onAccept,
   }) =>
       Container(
-        height: 133,
-        width: 100,
+        height: ScreenUtil.screenWidth(context) * 0.2,
+        width: ScreenUtil.screenWidth(context) * 0.15,
         child: DragTarget<Animal>(
           builder: (context, candidateData, rejectedData) => Stack(
             children: [
@@ -492,20 +470,24 @@ class DraggableWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Draggable<Animal>(
         data: animal,
-        feedback: buildImage(),
-        childWhenDragging: buildImage(),
-        child: buildImage(),
+        feedback: buildImage(context, true),
+        childWhenDragging: buildImage(context, false),
+        child: buildImage(context, false),
       );
 
-  Widget buildImage() => Center(
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(10),
-          child: Image.asset(
-            animal.imageUrl,
-            height: 170,
-            width: 130,
-            fit: BoxFit.cover,
-          ),
+  Widget buildImage(context, isBig) {
+    var cardHeight = ScreenUtil.screenWidth(context) * 0.2;
+    var cardWidth = ScreenUtil.screenWidth(context) * 0.15;
+    return Center(
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(10),
+        child: Image.asset(
+          animal.imageUrl,
+          height: isBig ? cardHeight * 1.2 : cardHeight,
+          width: isBig ? cardWidth * 1.2 : cardWidth,
+          fit: BoxFit.cover,
         ),
-      );
+      ),
+    );
+  }
 }

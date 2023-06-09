@@ -1,10 +1,10 @@
+// ignore_for_file: depend_on_referenced_packages
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../AppRoutes.dart';
-import 'main_game_screen.dart';
 
 class SettingScreen extends StatefulWidget {
   @override
