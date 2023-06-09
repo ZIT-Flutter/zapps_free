@@ -39,10 +39,8 @@ class _SettingScreenState extends State<SettingScreen> {
             ),
           ),
           Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const SizedBox(
-                height: 60,
-              ),
               const Text(
                 "Settings",
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
@@ -141,7 +139,6 @@ class _SettingScreenState extends State<SettingScreen> {
                                         await SharedPreferences.getInstance();
                                     prefs.setBool("musicOnOff", false);
                                     Get.back();
-                                    
                                   },
                                   child: const Text("Yes"),
                                 ),

@@ -1,3 +1,5 @@
+// ignore_for_file: depend_on_referenced_packages
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
@@ -185,38 +187,42 @@ class _GameScreenState extends State<GameScreen> {
             top: 70,
             left: 62,
             child: Container(
-              alignment: Alignment.bottomCenter,
+              color: Colors.blue,
+              alignment: Alignment.center,
               padding: EdgeInsets.zero,
               // color: Colors.amber,
               height: 150,
               width: 475,
 
-              child: GridView.builder(
-                padding: EdgeInsets.zero,
-                itemCount: all.length,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 4,
-                ),
-                itemBuilder: (context, index) {
-                  var data = [all[index]];
+              child: Center(
+                child: GridView.builder(
+                  padding: EdgeInsets.zero,
+                  itemCount: all.length,
+                  gridDelegate:
+                      const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 4,
+                  ),
+                  itemBuilder: (context, index) {
+                    var data = [all[index]];
 
-                  return Container(
-                    alignment: Alignment.center,
-                    // color: Colors.blue,
-                    margin:
-                        const EdgeInsets.symmetric(horizontal: 12, vertical: 0),
-                    child: buildTarget(
-                      context,
-                      text: '',
-                      animals: data,
-                      acceptTypes: AnimalType.values,
-                      onAccept: (data) => setState(() {
-                        removeAll(data);
-                        all.add(data);
-                      }),
-                    ),
-                  );
-                },
+                    return Container(
+                      alignment: Alignment.center,
+                      // color: Colors.blue,
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 0),
+                      child: buildTarget(
+                        context,
+                        text: '',
+                        animals: data,
+                        acceptTypes: AnimalType.values,
+                        onAccept: (data) => setState(() {
+                          removeAll(data);
+                          all.add(data);
+                        }),
+                      ),
+                    );
+                  },
+                ),
               ),
             ),
           ),
