@@ -172,94 +172,96 @@ class _GameScreenState extends State<GameScreen> {
             ),
 
             //Sequence Grid -----------------------------------------------------
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    for (int index = 0; index < all.length; index++)
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          buildTarget(
-                            context,
-                            text: '',
-                            animals: [all[index]],
-                            acceptTypes: AnimalType.values,
-                            onAccept: (data) => setState(() {
-                              removeAll(data);
-                              all.add(data);
-                            }),
-                          ),
-                          SizedBox(width: cardGap),
-                        ],
+            SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      for (int index = 0; index < all.length; index++)
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            buildTarget(
+                              context,
+                              text: '',
+                              animals: [all[index]],
+                              acceptTypes: AnimalType.values,
+                              onAccept: (data) => setState(() {
+                                removeAll(data);
+                                all.add(data);
+                              }),
+                            ),
+                            SizedBox(width: cardGap),
+                          ],
+                        ),
+                    ],
+                  ),
+                  SizedBox(height: cardGap),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      buildTarget(
+                        context,
+                        text: '1',
+                        animals: one,
+                        acceptTypes: [AnimalType.one],
+                        onAccept: (data) {
+                          setState(() {
+                            one.remove(data);
+                            one.add(data);
+                          });
+                          first.play();
+                        },
                       ),
-                  ],
-                ),
-                SizedBox(height: cardGap),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    buildTarget(
-                      context,
-                      text: '1',
-                      animals: one,
-                      acceptTypes: [AnimalType.one],
-                      onAccept: (data) {
-                        setState(() {
-                          one.remove(data);
-                          one.add(data);
-                        });
-                        first.play();
-                      },
-                    ),
-                    SizedBox(width: cardGap),
-                    buildTarget(
-                      context,
-                      text: '2',
-                      animals: two,
-                      acceptTypes: [AnimalType.two],
-                      onAccept: (data) {
-                        setState(() {
-                          removeAll(data);
-                          two.add(data);
-                        });
-                        second.play();
-                      },
-                    ),
-                    SizedBox(width: cardGap),
-                    buildTarget(
-                      context,
-                      text: '3',
-                      animals: three,
-                      acceptTypes: [AnimalType.three],
-                      onAccept: (data) {
-                        setState(() {
-                          removeAll(data);
-                          three.add(data);
-                        });
-                        third.play();
-                      },
-                    ),
-                    SizedBox(width: cardGap),
-                    buildTarget(
-                      context,
-                      text: '4',
-                      animals: four,
-                      acceptTypes: [AnimalType.four],
-                      onAccept: (data) {
-                        setState(() {
-                          removeAll(data);
-                          four.add(data);
-                        });
-                        fourth.play();
-                      },
-                    ),
-                    SizedBox(width: cardGap),
-                  ],
-                )
-              ],
+                      SizedBox(width: cardGap),
+                      buildTarget(
+                        context,
+                        text: '2',
+                        animals: two,
+                        acceptTypes: [AnimalType.two],
+                        onAccept: (data) {
+                          setState(() {
+                            removeAll(data);
+                            two.add(data);
+                          });
+                          second.play();
+                        },
+                      ),
+                      SizedBox(width: cardGap),
+                      buildTarget(
+                        context,
+                        text: '3',
+                        animals: three,
+                        acceptTypes: [AnimalType.three],
+                        onAccept: (data) {
+                          setState(() {
+                            removeAll(data);
+                            three.add(data);
+                          });
+                          third.play();
+                        },
+                      ),
+                      SizedBox(width: cardGap),
+                      buildTarget(
+                        context,
+                        text: '4',
+                        animals: four,
+                        acceptTypes: [AnimalType.four],
+                        onAccept: (data) {
+                          setState(() {
+                            removeAll(data);
+                            four.add(data);
+                          });
+                          fourth.play();
+                        },
+                      ),
+                      SizedBox(width: cardGap),
+                    ],
+                  )
+                ],
+              ),
             ),
             //Score and info
             Column(
@@ -395,8 +397,8 @@ class _GameScreenState extends State<GameScreen> {
     required DragTargetAccept<Animal> onAccept,
   }) =>
       Container(
-        height: ScreenUtil.screenWidth(context) * 0.2,
-        width: ScreenUtil.screenWidth(context) * 0.15,
+        height: ScreenUtil.screenWidth(context) * 0.17,
+        width: ScreenUtil.screenWidth(context) * 0.13,
         child: DragTarget<Animal>(
           builder: (context, candidateData, rejectedData) => Stack(
             children: [

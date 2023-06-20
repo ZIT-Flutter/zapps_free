@@ -5,6 +5,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:zapps/test/game_screen_test.dart';
 import 'package:zapps/views/splash_screen.dart';
 
 import 'AppRoutes.dart';
@@ -30,7 +31,8 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       // initialRoute: AppRoutes.homeSceen,
-      home: SplashScreen(),
+      // home: SplashScreen(),
+      home: GameScreenTest(),
 
       getPages: AppRoutes.routes,
       debugShowCheckedModeBanner: false,
