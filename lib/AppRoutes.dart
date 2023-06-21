@@ -1,7 +1,7 @@
 import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:get/get_navigation/src/routes/transitions_type.dart';
 import 'package:zapps/views/home_screen.dart';
-import 'package:zapps/views/main_game_screen.dart';
+import 'package:zapps/views/main_game_screen_old.dart';
 import 'package:zapps/views/more_screen.dart';
 import 'package:zapps/views/scores_screen.dart';
 import 'package:zapps/views/setting_screen.dart';

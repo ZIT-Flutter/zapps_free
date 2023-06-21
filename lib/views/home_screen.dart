@@ -1,8 +1,14 @@
+// ignore_for_file: prefer_const_constructors, sized_box_for_whitespace
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:zapps/components/screen_utils.dart';
 import 'package:zapps/data/frog.dart';
+import 'package:zapps/test/sequence_data.dart';
 import '../AppRoutes.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
+import '../test/game_screen_new.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -18,95 +24,104 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Center(
         child: Stack(
           children: [
-            RotatedBox(
-              quarterTurns: 1,
+            Container(
+              height: ScreenUtil.screenHeight(context),
+              width: ScreenUtil.screenWidth(context),
               child: Image.asset(
                 "assets/images/hbg.png",
                 fit: BoxFit.cover,
-                height: double.infinity,
-                width: double.infinity,
-                alignment: Alignment.center,
               ),
             ),
-            Positioned(
-              top: 40,
-              right: 30,
-              child: InkWell(
-                onTap: () {
-                  Get.toNamed(AppRoutes.settingsScreen);
-                },
-                child: const Icon(
-                  Icons.settings,
-                  size: 35,
-                ),
-              ),
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const SizedBox(
-                  height: 40,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    // SvgPicture.asset(
-                    //   'assets/images/rain1.svg',
-                    //   width: 50,
-                    //   height: 50,
-                    //   fit: BoxFit.cover,
-                    //   // color: Colors.blue,
-                    // ),
-                    HomeScreenSVGIcon(
-                        argument: Snow,
-                        imageLocation: 'assets/images/rain1.svg'),
-                    // HomeScreenGameIcon(
-                    //     argument: Snow,
-                    //     imageLocation: "assets/images/rain1.svg"),
-                    const SizedBox(width: 20),
-                    HomeScreenGameIcon(
-                        argument: Apple,
-                        imageLocation: "assets/images/sequence_apple_icon.png"),
-                    const SizedBox(width: 20),
-                    HomeScreenGameIcon(
-                        argument: Fishingboy,
-                        imageLocation:
-                            "assets/images/sequence_fishingboy_icon.png"),
-                    const SizedBox(width: 20),
-                    HomeScreenGameIcon(
-                        argument: Football,
-                        imageLocation:
-                            "assets/images/sequence_football_icon.png"),
-                    const SizedBox(width: 20),
-                  ],
-                ),
-                const SizedBox(
-                  height: 25,
-                ),
-                InkWell(
-                  onTap: () {
-                    // Get.toNamed(AppRoutes.GAMESCREEN, arguments: Mosquito);
-                  },
-                  child: Container(
-                    // height: 50,
-                    // width: 220,
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 10, horizontal: 10),
-                    margin: const EdgeInsets.symmetric(horizontal: 200),
-                    decoration: BoxDecoration(
-                      color: const Color.fromARGB(255, 127, 211, 245),
-                      // border: Border.all(color: Colors.black, width: 1),
-                      borderRadius: BorderRadius.circular(100),
+            SingleChildScrollView(
+              child: Column(
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(right: 20, top: 20),
+                    alignment: Alignment.topRight,
+                    child: InkWell(
+                      onTap: () {
+                        Get.toNamed(AppRoutes.settingsScreen);
+                      },
+                      child: const Icon(
+                        Icons.settings,
+                        size: 35,
+                      ),
                     ),
-                    child: const Center(
-                        child: Text(
-                      "Select a sequence card",
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                    )),
                   ),
-                ),
-              ],
+                  const SizedBox(
+                    height: 40,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      HomeScreenSVGIcon(
+                          argument: Snow,
+                          imageLocation: 'assets/images/rain1.svg'),
+                      // HomeScreenGameIcon(
+                      //     argument: Snow,
+                      //     imageLocation: "assets/images/rain1.svg"),
+                      const SizedBox(width: 20),
+                      HomeScreenGameIcon(
+                          argument: Apple,
+                          imageLocation:
+                              "assets/images/sequence_apple_icon.png"),
+                      const SizedBox(width: 20),
+                      HomeScreenGameIcon(
+                          argument: Fishingboy,
+                          imageLocation:
+                              "assets/images/sequence_fishingboy_icon.png"),
+                      const SizedBox(width: 20),
+                      HomeScreenGameIcon(
+                          argument: Football,
+                          imageLocation:
+                              "assets/images/sequence_football_icon.png"),
+                      const SizedBox(width: 20),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 25,
+                  ),
+                  InkWell(
+                    onTap: () {
+                      // Get.toNamed(AppRoutes.GAMESCREEN, arguments: Mosquito);
+                    },
+                    child: Container(
+                      // height: 50,
+                      // width: 220,
+
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 10, horizontal: 10),
+                      margin: const EdgeInsets.symmetric(horizontal: 200),
+                      decoration: BoxDecoration(
+                        color: const Color.fromARGB(255, 127, 211, 245),
+                        // border: Border.all(color: Colors.black, width: 1),
+                        borderRadius: BorderRadius.circular(100),
+                      ),
+                      child: const Center(
+                          child: Text(
+                        "Select a sequence card",
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                        ),
+                      )),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    GameScreenTest(sequenceList: sequence_1)));
+                      },
+                      child: Text('Test New Game Screen'))
+                ],
+              ),
             ),
           ],
         ),
