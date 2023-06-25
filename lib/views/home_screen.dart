@@ -67,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             'assets/images/sequence_fishingboy_icon.png'),
                     const SizedBox(width: 20),
                     HomeScreenGameIconNew(
-                        sequence: sequenceFishing,
+                        sequence: sequenceFootball,
                         imageLocation:
                             'assets/images/sequence_football_icon.png'),
                     const SizedBox(width: 20),
