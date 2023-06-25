@@ -259,7 +259,9 @@ class _GameScreenTestState extends State<GameScreenTest> {
 
   Row buildRowWithRandomDragable() {
     // Shuffle the list of Sequence randomly
-    draggableItems.shuffle(random);
+    if (_paused) {
+      draggableItems.shuffle(random);
+    }
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -285,6 +287,16 @@ class _GameScreenTestState extends State<GameScreenTest> {
           _paused = false;
         });
       },
+      childWhenDragging: Container(
+        margin: EdgeInsets.only(left: 10),
+        width: cardWidth,
+        height: cardHeight,
+        decoration: cardDecoration,
+        // child: Center(
+        //   child:
+        //       Center(child: imageCard(sequenceList[serial - 1].imageLocation)),
+        // ),
+      ),
       onDraggableCanceled: ((velocity, offset) {}),
       feedback: Container(
         width: cardWidth * 0.9,
