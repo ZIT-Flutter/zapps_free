@@ -5,8 +5,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
-import 'package:zapps/test/game_screen_new.dart';
-import 'package:zapps/test/sequence_data.dart';
+import 'package:zapps/views/game_screen_new.dart';
+import 'package:zapps/data/sequence_data.dart';
 import 'package:zapps/views/splash_screen.dart';
 
 import 'AppRoutes.dart';
