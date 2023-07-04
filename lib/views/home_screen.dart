@@ -1,14 +1,13 @@
-// ignore_for_file: prefer_const_constructors, sized_box_for_whitespace
+// ignore_for_file: prefer_const_constructors, sized_box_for_whitespace, depend_on_referenced_packages
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:zapps/components/screen_utils.dart';
-import 'package:zapps/unused_files/frog.dart';
-import 'package:zapps/data/sequence_data.dart';
-import '../AppRoutes.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
-import 'game_screen_new.dart';
+import 'package:zapps/components/screen_utils.dart';
+import 'package:zapps/data/sequence_data.dart';
+
+import '../AppRoutes.dart';
+import 'game_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

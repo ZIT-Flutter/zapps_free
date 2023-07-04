@@ -1,8 +1,10 @@
-// ignore_for_file: depend_on_referenced_packages
+// ignore_for_file: depend_on_referenced_packages, prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:zapps/components/screen_utils.dart';
+import 'package:zapps/game_logics/setting_logics.dart';
 
 import '../AppRoutes.dart';
 
@@ -12,6 +14,21 @@ class SettingScreen extends StatefulWidget {
 }
 
 class _SettingScreenState extends State<SettingScreen> {
+  bool isMusicOn = false;
+
+  @override
+  void initState() {
+    getBGMusicStatus();
+    super.initState();
+  }
+
+  void getBGMusicStatus() async {
+    bool isMO = await SettingsLogics.getBGMuscStatus();
+    setState(() {
+      isMusicOn = isMO;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,6 +53,7 @@ class _SettingScreenState extends State<SettingScreen> {
               },
               icon: const Icon(Icons.arrow_back),
               color: Colors.black54,
+              iconSize: ScreenUtil.screenWidth(context) * 0.05,
             ),
           ),
           Column(
@@ -58,9 +76,13 @@ class _SettingScreenState extends State<SettingScreen> {
                         height: 50,
                       ),
                       const SizedBox(height: 10),
-                      const Image(
-                        image: AssetImage("assets/icons/music.png"),
-                        height: 50,
+                      Row(
+                        children: [
+                          Image(
+                            image: AssetImage("assets/icons/music.png"),
+                            height: 50,
+                          ),
+                        ],
                       ),
                       const SizedBox(height: 10),
                       InkWell(
@@ -118,39 +140,23 @@ class _SettingScreenState extends State<SettingScreen> {
                       const SizedBox(
                         height: 32,
                       ),
-                      GestureDetector(
-                        onTap: () async {
-                          await showDialog(
-                            context: context,
-                            builder: (context) => AlertDialog(
-                              title: const Text("Music On/Off"),
-                              content: const Text(
-                                  "Do you want to turn on the music?"),
-                              actions: [
-                                TextButton(
-                                  onPressed: () {
-                                    Get.back();
-                                  },
-                                  child: const Text("No"),
-                                ),
-                                TextButton(
-                                  onPressed: () async {
-                                    SharedPreferences prefs =
-                                        await SharedPreferences.getInstance();
-                                    prefs.setBool("musicOnOff", false);
-                                    Get.back();
-                                  },
-                                  child: const Text("Yes"),
-                                ),
-                              ],
-                            ),
-                          );
-                        },
-                        child: const Text(
-                          "Music On/Off",
-                          style: TextStyle(
-                              fontSize: 25, fontWeight: FontWeight.bold),
-                        ),
+                      Row(
+                        children: [
+                          const Text(
+                            "Music On/Off",
+                            style: TextStyle(
+                                fontSize: 25, fontWeight: FontWeight.bold),
+                          ),
+                          Switch(
+                              value: isMusicOn,
+                              onChanged: (value) {
+                                setState(() {
+                                  isMusicOn = !isMusicOn;
+                                });
+
+                                SettingsLogics.setBGMuscStatus(isMusicOn);
+                              })
+                        ],
                       ),
                       const SizedBox(
                         height: 32,

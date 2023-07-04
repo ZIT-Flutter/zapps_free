@@ -1,5 +1,7 @@
+// ignore_for_file: depend_on_referenced_packages
+
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:zapps/game_logics/score_logics.dart';
 
 class ScoresScreen extends StatefulWidget {
   const ScoresScreen({Key? key}) : super(key: key);
@@ -14,6 +16,7 @@ class _ScoresScreenState extends State<ScoresScreen> {
   @override
   void initState() {
     getScore();
+
     super.initState();
   }
 
@@ -33,16 +36,16 @@ class _ScoresScreenState extends State<ScoresScreen> {
             ),
           ),
           Positioned(
+            top: 60,
+            left: 120,
             child: IconButton(
-              icon: Icon(
+              icon: const Icon(
                 Icons.arrow_back_ios,
                 size: 30,
                 color: Colors.black54,
               ),
               onPressed: () => Navigator.pop(context),
             ),
-            top: 60,
-            left: 120,
           ),
           Center(
             child: Column(
@@ -74,9 +77,9 @@ class _ScoresScreenState extends State<ScoresScreen> {
   }
 
   void getScore() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+    int getHighScore = await ScoreLogics.getHighScore();
     setState(() {
-      highScore = prefs.getInt('HIGHSCORE');
+      highScore = getHighScore;
     });
   }
 }
