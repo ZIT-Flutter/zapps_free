@@ -77,7 +77,7 @@ class _SettingScreenState extends State<SettingScreen> {
                         child: Text(
                           "Settings",
                           style: TextStyle(
-                              fontSize: screenWidth * 0.03,
+                              fontSize: screenWidth * 0.04,
                               fontWeight: FontWeight.bold),
                         ),
                       ),
