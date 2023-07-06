@@ -393,12 +393,4 @@ class _GameScreenTestState extends State<GameScreenTest> {
       ),
     );
   }
-
-  // int calculateScore(int elapsedSeconds) {
-  //   const int maxScore = 300;
-  //   int remainingSeconds = maxScore - elapsedSeconds;
-  //   int time_score = remainingSeconds > 0 ? remainingSeconds : 0;
-  //   int final_score = score + time_score;
-  //   return final_score;
-  // }
 }

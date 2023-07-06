@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 import 'package:zapps/components/screen_utils.dart';
 import 'package:zapps/game_logics/setting_logics.dart';
 
@@ -15,10 +16,14 @@ class SettingScreen extends StatefulWidget {
 
 class _SettingScreenState extends State<SettingScreen> {
   bool isMusicOn = false;
+  bool timerStatus = false;
+
+  late double screenWidth;
 
   @override
   void initState() {
     getBGMusicStatus();
+    getTimerStatus();
     super.initState();
   }
 
@@ -29,152 +34,163 @@ class _SettingScreenState extends State<SettingScreen> {
     });
   }
 
+  void getTimerStatus() async {
+    bool isTimer = await SettingsLogics.getTimerStatus();
+    setState(() {
+      timerStatus = isTimer;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    screenWidth = ScreenUtil.screenWidth(context);
     return Scaffold(
-      body: Stack(
-        children: [
-          RotatedBox(
-            quarterTurns: 1,
-            child: Image.asset(
-              "assets/icons/v.png",
-              fit: BoxFit.cover,
-              height: double.infinity,
-              width: double.infinity,
-              alignment: Alignment.center,
-            ),
+      body: Container(
+        height: ScreenUtil.screenHeight(context),
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/images/settings_bg.jpg'),
+            fit: BoxFit.cover,
           ),
-          Positioned(
-            top: 20,
-            left: 30,
-            child: IconButton(
-              onPressed: () {
-                Get.back();
-              },
-              icon: const Icon(Icons.arrow_back),
-              color: Colors.black54,
-              iconSize: ScreenUtil.screenWidth(context) * 0.05,
-            ),
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text(
-                "Settings",
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Column(
-                    children: [
-                      const Image(
-                        image: AssetImage("assets/icons/timer.png"),
-                        height: 50,
-                      ),
-                      const SizedBox(height: 10),
-                      Row(
-                        children: [
-                          Image(
-                            image: AssetImage("assets/icons/music.png"),
-                            height: 50,
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 10),
-                      InkWell(
-                        onTap: () {
-                          Get.toNamed(AppRoutes.scoreScreen);
+        ),
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              children: [
+                Stack(
+                  children: [
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: IconButton(
+                        iconSize: screenWidth * 0.08,
+                        onPressed: () {
+                          Get.back();
                         },
-                        child: const Image(
-                          image: AssetImage("assets/icons/score.png"),
-                          height: 50,
-                        ),
+                        icon: Image.asset('assets/icons/home_icon.png'),
                       ),
-                    ],
-                  ),
-                  const SizedBox(
-                    width: 15,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      GestureDetector(
-                        onTap: () async {
-                          // pop up dialog
-                          await showDialog(
-                            context: context,
-                            builder: (context) => AlertDialog(
-                              title: const Text("Timer On/Off"),
-                              content: const Text(
-                                  "Do you want to turn on the timer?"),
-                              actions: [
-                                TextButton(
-                                  onPressed: () {
-                                    Get.back();
-                                  },
-                                  child: const Text("No"),
-                                ),
-                                TextButton(
-                                  onPressed: () async {
-                                    SharedPreferences prefs =
-                                        await SharedPreferences.getInstance();
-                                    prefs.setBool("timerOnOff", false);
-                                    Get.back();
-                                  },
-                                  child: const Text("Yes"),
-                                ),
-                              ],
-                            ),
-                          );
-                        },
-                        child: const Text(
-                          "Timer On/Off",
+                    ),
+                    Align(
+                      alignment: Alignment.topCenter,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          "Settings",
                           style: TextStyle(
-                              fontSize: 25, fontWeight: FontWeight.bold),
+                              fontSize: screenWidth * 0.03,
+                              fontWeight: FontWeight.bold),
                         ),
                       ),
-                      const SizedBox(
-                        height: 32,
-                      ),
-                      Row(
-                        children: [
-                          const Text(
-                            "Music On/Off",
-                            style: TextStyle(
-                                fontSize: 25, fontWeight: FontWeight.bold),
-                          ),
-                          Switch(
-                              value: isMusicOn,
-                              onChanged: (value) {
-                                setState(() {
-                                  isMusicOn = !isMusicOn;
-                                });
-
-                                SettingsLogics.setBGMuscStatus(isMusicOn);
-                              })
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 32,
-                      ),
-                      InkWell(
-                          onTap: () {
-                            Get.toNamed(AppRoutes.scoreScreen);
-                          },
-                          child: const Text(
-                            "High Score",
-                            style: TextStyle(
-                                fontSize: 25, fontWeight: FontWeight.bold),
-                          )),
-                    ],
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 30),
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: Colors.green.withOpacity(0.3),
                   ),
-                ],
-              ),
-            ],
+                  width: screenWidth * 0.5,
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            SettingItemWidget(
+                              iconImage: 'assets/icons/clock_icon_128.png',
+                              title: 'Timer',
+                            ),
+                            Switch(
+                                value: timerStatus,
+                                onChanged: (value) {
+                                  setState(() {
+                                    timerStatus = !timerStatus;
+                                  });
+
+                                  SettingsLogics.setTimerStatus(timerStatus);
+                                })
+                          ],
+                        ),
+                        const SizedBox(height: 10),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            SettingItemWidget(
+                              iconImage: 'assets/icons/music_icon_128.png',
+                              title: 'Music',
+                            ),
+                            Switch(
+                                value: isMusicOn,
+                                onChanged: (value) {
+                                  setState(() {
+                                    isMusicOn = !isMusicOn;
+                                  });
+
+                                  SettingsLogics.setBGMuscStatus(isMusicOn);
+                                })
+                          ],
+                        ),
+                        const SizedBox(height: 10),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            SettingItemWidget(
+                              iconImage: 'assets/icons/score.png',
+                              title: 'High Score',
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class SettingItemWidget extends StatefulWidget {
+  final VoidCallback? onPressed;
+  final String iconImage;
+  final String title;
+
+  const SettingItemWidget({
+    Key? key,
+    this.onPressed,
+    required this.iconImage,
+    required this.title,
+  }) : super(key: key);
+
+  @override
+  State<SettingItemWidget> createState() => _SettingItemWidgetState();
+}
+
+class _SettingItemWidgetState extends State<SettingItemWidget> {
+  @override
+  Widget build(BuildContext context) {
+    double screenWidth = ScreenUtil.screenWidth(context);
+    return InkWell(
+      onTap: () {
+        widget.onPressed;
+      },
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Image.asset(widget.iconImage, width: screenWidth * 0.06),
+          const SizedBox(width: 20),
+          Text(
+            widget.title,
+            style: TextStyle(
+              fontSize: screenWidth * 0.04,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ],
       ),

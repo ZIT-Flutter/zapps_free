@@ -15,4 +15,19 @@ class SettingsLogics {
 
     print('Music is ${value ? 'On' : 'Off'}');
   }
+
+  static Future<void> setTimerStatus(bool value) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    await prefs.setBool('timer', value);
+
+    print('Timer is ${value ? 'On' : 'Off'}');
+  }
+
+  static Future<bool> getTimerStatus() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool isTimer = prefs.getBool('timer') ?? true;
+
+    return isTimer;
+  }
 }

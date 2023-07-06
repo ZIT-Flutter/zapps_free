@@ -17,87 +17,100 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  late double screenWidth = ScreenUtil.screenWidth(context);
+  late double screenWidth;
   @override
   Widget build(BuildContext context) {
+    screenWidth = ScreenUtil.screenWidth(context);
     return Scaffold(
       body: Container(
+        height: ScreenUtil.screenHeight(context),
         decoration: BoxDecoration(
-            image: DecorationImage(
-          image: AssetImage('assets/images/hbg.png'),
-          fit: BoxFit.cover,
-        )),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Container(
-              margin: EdgeInsets.only(right: 20, top: 20),
-              alignment: Alignment.topRight,
-              child: InkWell(
-                onTap: () {
-                  Get.toNamed(AppRoutes.settingsScreen);
-                },
-                child: const Icon(
-                  Icons.settings,
-                  size: 35,
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    HomeScreenGameIconNew(
-                        sequence: sequenceSnow,
-                        imageLocation: 'assets/images/sequence_snow_icon.png'),
-                    const SizedBox(width: 20),
-                    HomeScreenGameIconNew(
-                        sequence: sequenceApple,
-                        imageLocation: 'assets/images/sequence_apple_icon.png'),
-                    const SizedBox(width: 20),
-                    HomeScreenGameIconNew(
-                        sequence: sequenceFishing,
-                        imageLocation:
-                            'assets/images/sequence_fishingboy_icon.png'),
-                    const SizedBox(width: 20),
-                    HomeScreenGameIconNew(
-                        sequence: sequenceFootball,
-                        imageLocation:
-                            'assets/images/sequence_football_icon.png'),
-                    const SizedBox(width: 20),
-                  ],
-                ),
-                const SizedBox(height: 25),
-                Container(
-                  padding: EdgeInsets.symmetric(
-                      vertical: ScreenUtil.screenHeight(context) * 0.03),
-                  margin: EdgeInsets.symmetric(horizontal: screenWidth * 0.2),
-                  decoration: BoxDecoration(
-                    color: const Color.fromARGB(255, 127, 211, 245),
-                    // border: Border.all(color: Colors.black, width: 1),
-                    borderRadius: BorderRadius.circular(100),
-                  ),
-                  child: const Center(
-                      child: Text(
-                    "Select a sequence card",
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
+          image: DecorationImage(
+            image: AssetImage('assets/images/hbg.png'),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Container(
+                    width: screenWidth * 0.06,
+                    margin: EdgeInsets.only(right: 20, top: 20),
+                    alignment: Alignment.topRight,
+                    child: InkWell(
+                      onTap: () {
+                        Get.toNamed(AppRoutes.settingsScreen);
+                      },
+                      child: Image.asset(
+                        'assets/icons/settings_icon_128.png',
+                        fit: BoxFit.contain,
+                      ),
                     ),
-                  )),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-              ],
-            ),
-          ],
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      HomeScreenGameIconNew(
+                          sequence: sequenceSnow,
+                          imageLocation:
+                              'assets/images/sequence_snow_icon.png'),
+                      const SizedBox(width: 20),
+                      HomeScreenGameIconNew(
+                          sequence: sequenceApple,
+                          imageLocation:
+                              'assets/images/sequence_apple_icon.png'),
+                      const SizedBox(width: 20),
+                      HomeScreenGameIconNew(
+                          sequence: sequenceFishing,
+                          imageLocation:
+                              'assets/images/sequence_fishingboy_icon.png'),
+                      const SizedBox(width: 20),
+                      HomeScreenGameIconNew(
+                          sequence: sequenceFootball,
+                          imageLocation:
+                              'assets/images/sequence_football_icon.png'),
+                      const SizedBox(width: 20),
+                    ],
+                  ),
+                  const SizedBox(height: 25),
+                  Container(
+                    padding: EdgeInsets.symmetric(
+                        vertical: ScreenUtil.screenHeight(context) * 0.03),
+                    margin: EdgeInsets.symmetric(horizontal: screenWidth * 0.2),
+                    decoration: BoxDecoration(
+                      color: const Color.fromARGB(255, 127, 211, 245),
+                      // border: Border.all(color: Colors.black, width: 1),
+                      borderRadius: BorderRadius.circular(100),
+                    ),
+                    child: const Center(
+                        child: Text(
+                      "Select a sequence card",
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                      ),
+                    )),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
