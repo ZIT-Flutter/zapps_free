@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:zapps/game_logics/score_logics.dart';
 
+import '../components/screen_utils.dart';
+
 class ScoresScreen extends StatefulWidget {
   const ScoresScreen({Key? key}) : super(key: key);
 
@@ -22,6 +24,8 @@ class _ScoresScreenState extends State<ScoresScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = ScreenUtil.screenWidth(context);
+    double screenHeight = ScreenUtil.screenHeight(context);
     return Scaffold(
       body: Stack(
         children: [
@@ -36,15 +40,14 @@ class _ScoresScreenState extends State<ScoresScreen> {
             ),
           ),
           Positioned(
-            top: 60,
-            left: 120,
+            top: screenHeight * 0.06,
+            left: screenWidth * 0.12,
             child: IconButton(
-              icon: const Icon(
-                Icons.arrow_back_ios,
-                size: 30,
-                color: Colors.black54,
-              ),
-              onPressed: () => Navigator.pop(context),
+              iconSize: screenWidth * 0.08,
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              icon: Image.asset('assets/icons/home_icon.png'),
             ),
           ),
           Center(

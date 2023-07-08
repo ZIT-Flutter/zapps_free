@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:zapps/components/screen_utils.dart';
 import 'package:zapps/game_logics/setting_logics.dart';
+import 'package:zapps/views/scores_screen.dart';
 
 import '../AppRoutes.dart';
 
@@ -137,9 +138,18 @@ class _SettingScreenState extends State<SettingScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            SettingItemWidget(
-                              iconImage: 'assets/icons/score.png',
-                              title: 'High Score',
+                            InkWell(
+                              onTap: () {
+                                print('Hi');
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => ScoresScreen()));
+                              },
+                              child: SettingItemWidget(
+                                iconImage: 'assets/icons/score.png',
+                                title: 'High Score',
+                              ),
                             ),
                           ],
                         ),
@@ -157,13 +167,13 @@ class _SettingScreenState extends State<SettingScreen> {
 }
 
 class SettingItemWidget extends StatefulWidget {
-  final VoidCallback? onPressed;
+  // final VoidCallback? onPressed;
   final String iconImage;
   final String title;
 
   const SettingItemWidget({
     Key? key,
-    this.onPressed,
+    // this.onPressed,
     required this.iconImage,
     required this.title,
   }) : super(key: key);
@@ -176,24 +186,19 @@ class _SettingItemWidgetState extends State<SettingItemWidget> {
   @override
   Widget build(BuildContext context) {
     double screenWidth = ScreenUtil.screenWidth(context);
-    return InkWell(
-      onTap: () {
-        widget.onPressed;
-      },
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.asset(widget.iconImage, width: screenWidth * 0.06),
-          const SizedBox(width: 20),
-          Text(
-            widget.title,
-            style: TextStyle(
-              fontSize: screenWidth * 0.04,
-              fontWeight: FontWeight.bold,
-            ),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Image.asset(widget.iconImage, width: screenWidth * 0.06),
+        const SizedBox(width: 20),
+        Text(
+          widget.title,
+          style: TextStyle(
+            fontSize: screenWidth * 0.04,
+            fontWeight: FontWeight.bold,
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
