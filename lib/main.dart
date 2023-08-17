@@ -2,10 +2,13 @@
 
 // ignore_for_file: invalid_language_version_override, depend_on_referenced_packages
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:zapps/views/splash_screen.dart';
+import 'package:device_preview/device_preview.dart';
 
 import 'AppRoutes.dart';
 //adfho
@@ -16,7 +19,12 @@ void main() {
     DeviceOrientation.landscapeLeft,
     DeviceOrientation.landscapeRight,
   ]).then((_) {
-    runApp(const MyApp());
+    runApp(
+      DevicePreview(
+        enabled: Platform.isWindows,
+        builder: (context) => MyApp(), // Wrap your app
+      ),
+    );
   });
 }
 

@@ -94,8 +94,16 @@ class _GameScreenTestState extends State<GameScreenTest> {
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                icon: Icon(Icons.arrow_back),
-                iconSize: screenWidth * 0.05,
+                icon: CircleAvatar(
+                  minRadius: 20,
+                  backgroundColor: Colors.pink,
+                  child: Icon(
+                    Icons.arrow_back,
+                    weight: 10,
+                    size: screenWidth * 0.06,
+                  ),
+                ),
+                iconSize: screenWidth * 0.06,
                 color: Colors.black,
               ),
             ),
@@ -143,84 +151,92 @@ class _GameScreenTestState extends State<GameScreenTest> {
 
                         SettingsLogics.setBGMuscStatus(isMusicPlaying);
                       },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Music',
-                            style: TextStyle(fontSize: screenWidth * 0.03),
-                          ),
-                          SizedBox(width: 10),
-                          Icon(
-                            isMusicPlaying ? Icons.volume_up : Icons.volume_off,
-                            size: screenWidth * 0.03,
-                            color:
-                                isMusicPlaying ? Colors.blueAccent : Colors.red,
-                          )
-                        ],
-                      )),
-                  Container(
-                    width: screenWidth * 0.15,
-                    height: ScreenUtil.screenHeight(context) * 0.30,
-                    // color: const Color.fromARGB(255, 139, 175, 238),
-                    margin: EdgeInsets.only(right: 30, top: screenWidth * 0.10),
-                    padding: EdgeInsets.all(5),
-                    decoration: cardDecoration,
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: SingleChildScrollView(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          mainAxisSize: MainAxisSize.min,
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Text(
-                              'Score: $score',
-                              overflow: TextOverflow.ellipsis,
-                              textScaleFactor: 1.6,
+                              'Music',
+                              style: TextStyle(fontSize: screenWidth * 0.03),
                             ),
-                            SizedBox(height: screenWidth * 0.015),
-                            StreamBuilder(
-                                stream: _periodicStream,
-                                builder:
-                                    (context, AsyncSnapshot<int> snapshot) {
-                                  if (snapshot.hasData != previousStreamValue &&
-                                      snapshot.data != null) {
-                                    previousStreamValue = snapshot.data!;
-                                    if (!_paused) {
-                                      _timerValue++;
-                                    }
-                                  }
-
-                                  return Text(
-                                    'Time: $_timerValue s',
-                                    overflow: TextOverflow.ellipsis,
-                                    textScaleFactor: 1.6,
-                                  );
-                                }),
-                            SizedBox(height: screenWidth * 0.015),
-                            TextButton(
-                              onPressed: () {
-                                Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => GameScreenTest(
-                                            sequenceList:
-                                                widget.sequenceList)));
-                              },
-                              child: Row(
-                                children: [
-                                  Icon(Icons.refresh),
-                                  Text(
-                                    'Reset',
-                                    overflow: TextOverflow.ellipsis,
-                                    textScaleFactor: 1.6,
-                                  ),
-                                ],
-                              ),
-                            ),
+                            SizedBox(width: 10),
+                            Icon(
+                              isMusicPlaying
+                                  ? Icons.volume_up
+                                  : Icons.volume_off,
+                              size: screenWidth * 0.03,
+                              color: isMusicPlaying
+                                  ? Colors.blueAccent
+                                  : Colors.red,
+                            )
                           ],
+                        ),
+                      )),
+                  Expanded(
+                    child: Center(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20)),
+                          color: Colors.blue[100],
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                TextHeading(label: 'Score: $score'),
+                                SizedBox(height: screenWidth * 0.015),
+                                StreamBuilder(
+                                    stream: _periodicStream,
+                                    builder:
+                                        (context, AsyncSnapshot<int> snapshot) {
+                                      if (snapshot.hasData !=
+                                              previousStreamValue &&
+                                          snapshot.data != null) {
+                                        previousStreamValue = snapshot.data!;
+                                        if (!_paused) {
+                                          _timerValue++;
+                                        }
+                                      }
+
+                                      return TextHeading(
+                                          label: 'Time: $_timerValue s');
+                                    }),
+                                SizedBox(height: screenWidth * 0.015),
+                                ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                      shape: StadiumBorder(),
+                                      backgroundColor: Colors.cyan),
+                                  onPressed: () {
+                                    Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                GameScreenTest(
+                                                    sequenceList:
+                                                        widget.sequenceList)));
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Row(
+                                      children: [
+                                        Icon(Icons.refresh),
+                                        Text(
+                                          'Reset',
+                                          overflow: TextOverflow.ellipsis,
+                                          textScaleFactor: 1.2,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                         ),
                       ),
                     ),
@@ -231,6 +247,16 @@ class _GameScreenTestState extends State<GameScreenTest> {
           ],
         ),
       ),
+    );
+  }
+
+  Text TextHeading({required String label}) {
+    return Text(
+      label,
+      // 'Score: $score',
+      overflow: TextOverflow.ellipsis,
+      style:
+          TextStyle(fontWeight: FontWeight.bold, fontSize: screenWidth * 0.03),
     );
   }
 
