@@ -18,7 +18,7 @@ BoxDecoration getCardDecoration(Color? color) {
 }
 
 BoxDecoration cardDecoration = BoxDecoration(
-  color: Colors.white,
+  color: ColorPallate.white,
   borderRadius: BorderRadius.circular(defaultRadius),
   boxShadow: const [
     BoxShadow(
@@ -29,8 +29,12 @@ BoxDecoration cardDecoration = BoxDecoration(
   ],
 );
 
-const TextStyle cardTextStyle = TextStyle(
-  decoration: TextDecoration.none,
-  fontSize: 25,
-  color: Colors.black54,
-);
+TextStyle cardTextStyle = TextStyle(
+    fontSize: 35, color: ColorPallate.blue, fontWeight: FontWeight.bold);
+
+class ColorPallate {
+  static Color blue = const Color(0xFF0D1282);
+  static Color white = const Color(0xFFEEEDED);
+  static Color yellow = const Color(0xFFF0DE36);
+  static Color red = const Color(0xFFD71313);
+}

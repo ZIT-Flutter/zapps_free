@@ -88,21 +88,20 @@ class _GameScreenTestState extends State<GameScreenTest> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              margin: EdgeInsets.only(left: 20, top: 20),
+              margin: screenWidth > 700
+                  ? EdgeInsets.only(left: 20, top: 20)
+                  : EdgeInsets.all(0),
               alignment: Alignment.topLeft,
               child: IconButton(
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                icon: CircleAvatar(
-                  minRadius: 20,
-                  backgroundColor: Colors.pink,
-                  child: Icon(
-                    Icons.arrow_back,
-                    weight: 10,
-                    size: screenWidth * 0.06,
-                  ),
-                ),
+                icon: Image.asset('assets/images/back-button.png'),
+                // CircleAvatar(
+                //   minRadius: 40,
+                //   backgroundColor: ColorPallate.white,
+                //   child: Image.asset('assets/images/back-button.png'),
+                // ),
                 iconSize: screenWidth * 0.06,
                 color: Colors.black,
               ),
@@ -159,7 +158,9 @@ class _GameScreenTestState extends State<GameScreenTest> {
                           children: [
                             Text(
                               'Music',
-                              style: TextStyle(fontSize: screenWidth * 0.03),
+                              style: TextStyle(
+                                  fontSize: screenWidth * 0.03,
+                                  color: ColorPallate.blue),
                             ),
                             SizedBox(width: 10),
                             Icon(
@@ -168,8 +169,8 @@ class _GameScreenTestState extends State<GameScreenTest> {
                                   : Icons.volume_off,
                               size: screenWidth * 0.03,
                               color: isMusicPlaying
-                                  ? Colors.blueAccent
-                                  : Colors.red,
+                                  ? ColorPallate.blue
+                                  : ColorPallate.red,
                             )
                           ],
                         ),
@@ -181,7 +182,7 @@ class _GameScreenTestState extends State<GameScreenTest> {
                         child: Card(
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20)),
-                          color: Colors.blue[100],
+                          color: ColorPallate.yellow,
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Column(
@@ -210,7 +211,7 @@ class _GameScreenTestState extends State<GameScreenTest> {
                                 ElevatedButton(
                                   style: ElevatedButton.styleFrom(
                                       shape: StadiumBorder(),
-                                      backgroundColor: Colors.cyan),
+                                      backgroundColor: ColorPallate.blue),
                                   onPressed: () {
                                     Navigator.pushReplacement(
                                         context,
@@ -255,8 +256,10 @@ class _GameScreenTestState extends State<GameScreenTest> {
       label,
       // 'Score: $score',
       overflow: TextOverflow.ellipsis,
-      style:
-          TextStyle(fontWeight: FontWeight.bold, fontSize: screenWidth * 0.03),
+      style: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: screenWidth * 0.03,
+          color: ColorPallate.blue),
     );
   }
 
@@ -333,12 +336,11 @@ class _GameScreenTestState extends State<GameScreenTest> {
                         decoration: cardDecoration,
                         width: cardWidth,
                         height: cardHeight,
-                        child: Container(
-                            child: Center(
-                                child: Text(
+                        child: Center(
+                            child: Text(
                           '$targetSerial',
                           style: cardTextStyle,
-                        ))),
+                        )),
                       )
                 : Container(
                     width: cardWidth,

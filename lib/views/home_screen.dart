@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:zapps/components/constants.dart';
 
 import 'package:zapps/components/screen_utils.dart';
 import 'package:zapps/data/sequence_data.dart';
@@ -18,9 +19,14 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   late double screenWidth;
+  late double screenHeight;
   @override
   Widget build(BuildContext context) {
     screenWidth = ScreenUtil.screenWidth(context);
+    screenHeight = ScreenUtil.screenHeight(context);
+
+    print('Screen Width: $screenWidth');
+    print('Screen Height: $screenHeight');
     return Scaffold(
       body: Container(
         height: ScreenUtil.screenHeight(context),
@@ -84,24 +90,24 @@ class _HomeScreenState extends State<HomeScreen> {
                       const SizedBox(width: 20),
                     ],
                   ),
-                  const SizedBox(height: 25),
+                  SizedBox(height: screenHeight * 0.15),
                   Container(
-                    padding: EdgeInsets.symmetric(
-                        vertical: ScreenUtil.screenHeight(context) * 0.03),
+                    padding:
+                        EdgeInsets.symmetric(vertical: screenHeight * 0.03),
                     margin: EdgeInsets.symmetric(horizontal: screenWidth * 0.2),
                     decoration: BoxDecoration(
-                      color: const Color.fromARGB(255, 127, 211, 245),
-                      // border: Border.all(color: Colors.black, width: 1),
+                      color: ColorPallate.blue,
+                      // border: Border.all(color: ColorPallate.yellow, width: 3),
                       borderRadius: BorderRadius.circular(100),
                     ),
-                    child: const Center(
+                    child: Center(
                         child: Text(
                       "Select a sequence card",
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                      ),
+                          fontWeight: FontWeight.bold,
+                          fontSize: screenWidth * 0.025,
+                          color: ColorPallate.white),
                     )),
                   ),
                   SizedBox(
